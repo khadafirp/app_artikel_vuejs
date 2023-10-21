@@ -6,7 +6,13 @@ export default{
         ...mapState(['artikelSlice'])
     },
     methods: {
-        ...mapActions(['artikelSlice'])
+        ...mapActions(['artikelSlice']),
+        editPage(id){
+            this.artikelSlice.news_id = id
+            this.$router.push({
+                path: 'edit-artikel',
+            })
+        }
     },
     mounted(){
         this.$store.dispatch('artikelSlice/getArtikel')
@@ -33,7 +39,7 @@ export default{
                 <td>{{ item.news_title }}</td>
                 <td><div class="desc">{{ item.news_description }}</div></td>
                 <td>
-                    <button class="button button2">Ubah</button>
+                    <button class="button button2" @click="editPage(item.news_id)">Ubah</button>
                     <button class="button button3">Hapus</button>
                 </td>
             </tr>

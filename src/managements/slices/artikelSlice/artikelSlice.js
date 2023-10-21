@@ -6,6 +6,10 @@ export default {
     namespaced: true,
     state: {
         data: null,
+        dataEdit: null,
+        news_id: null,
+        judul: null,
+        detail: null,
         kategori: null,
         endpoint: 'http://localhost:8080/'
     },
@@ -32,11 +36,35 @@ export default {
                     })
                 }
             })
+        },
+        filterData(state){
+            Swal.showLoading()
+            Axios.post(
+                state.endpoint + 'filter-berita',
+                {
+                    news_id: state.news_id
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            ).then((response) => {
+                Swal.hideLoading()
+                if(response.data['status-code'] === 200){
+                    state.judul = response.data.data.news_title
+                    state.detail = response.data.data.news_description
+                    state.dataEdit = response.data.data
+                }
+            })
         }
     },
     actions: {
         getArtikel({commit}){
             commit('getArtikel')
+        },
+        filter({commit}){
+            commit('filterData')
         }
     }
 }
