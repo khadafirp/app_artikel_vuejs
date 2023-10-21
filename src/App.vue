@@ -1,6 +1,20 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+<script>
+  import { mapState, mapActions } from 'vuex'
+  export default {
+    computed: {
+      ...mapState(['profilSlice'])
+    },
+    methods: {
+      ...mapActions(['profilSlice']),
+      keluar(){
+        localStorage.clear()
+        window.location.reload()
+      }
+    },
+    mounted(){
+      this.$store.dispatch('profilSlice/getProfil')
+    }
+  }
 </script>
 
 <template>
@@ -8,11 +22,24 @@ import HelloWorld from './components/HelloWorld.vue'
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <div class="greetings">
+        <h1 class="green">Selamat Datang</h1>
+        <h2 v-if="profilSlice.nama_lengkap != null">
+          {{ profilSlice.nama_lengkap }}
+        </h2>
+        <div v-if="profilSlice.nama_lengkap != null">
+          <button @click="keluar">Keluar</button>
+        </div>
+      </div>
 
-      <nav>
+      <nav v-if="profilSlice.nama_lengkap === null">
         <RouterLink to="/">Beranda</RouterLink>
         <RouterLink to="/masuk">Masuk</RouterLink>
+      </nav>
+      <nav v-else>
+        <RouterLink to="/">Beranda</RouterLink>
+        <RouterLink to="#">Artikel</RouterLink>
+        <RouterLink to="#">Profil</RouterLink>
       </nav>
     </div>
   </header>
@@ -80,6 +107,21 @@ nav a:first-of-type {
 
     padding: 1rem 0;
     margin-top: 1rem;
+  }
+  h1 {
+    font-weight: 500;
+    font-size: 2.6rem;
+    position: relative;
+    top: -10px;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  .greetings h1,
+  .greetings h3 {
+    text-align: center;
   }
 }
 </style>

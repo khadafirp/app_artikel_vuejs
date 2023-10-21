@@ -1,8 +1,11 @@
 <script>
+  import { mapState, mapActions } from 'vuex'
   export default {
     computed: {
+      ...mapState(['masukSlice'])
     },
     methods: {
+      ...mapActions(['masukSlice']),
       daftarPage(){
         this.$router.push('/daftar')
       }
@@ -15,19 +18,19 @@
   <div>
     <h1 class="green">LOGIN</h1>
     <div>
-      Username
+      Email
     </div>
     <div>
-      <input/>
+      <input v-model="masukSlice.email"/>
     </div>
     <div>
       Password
     </div>
     <div>
-      <input/>
+      <input type="password" v-model="masukSlice.password"/>
     </div>
     <div>
-      <button>Masuk</button>
+      <button @click="$store.dispatch('masukSlice/masuk')">Masuk</button>
     </div>
     <div>
       Belum punya akun ? 
