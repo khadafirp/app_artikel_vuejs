@@ -18,6 +18,7 @@ export default {
             ).then((response) => {
                 if(response.data['status-code'] === 200){
                     state.nama_lengkap = response.data['data']['nama_lengkap']
+                    localStorage.setItem('token', response.data['token'])
                 }
             })
         }

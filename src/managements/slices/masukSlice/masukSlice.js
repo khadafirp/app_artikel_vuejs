@@ -22,7 +22,6 @@ export default {
                 if(response.data['status-code'] === 200){
                     localStorage.setItem('email', response.data['data']['email'])
                     localStorage.setItem('password', response.data['data']['password'])
-                    Swal.hideLoading()
                     Swal.fire({
                         title: 'Berhasil !',
                         text: 'Login berhasil.',
@@ -36,7 +35,6 @@ export default {
                     })
                     router.push('/')
                 } else {
-                    Swal.hideLoading()
                     Swal.fire({
                         title: 'Login Gagal !',
                         text: response.data,

@@ -1,6 +1,9 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   export default {
+    state: {
+      reload: true
+    },
     computed: {
       ...mapState(['profilSlice'])
     },
@@ -8,10 +11,12 @@
       ...mapActions(['profilSlice']),
       keluar(){
         localStorage.clear()
+        this.$router.push('/')
         window.location.reload()
       }
     },
     mounted(){
+      // window.location.reload()
       this.$store.dispatch('profilSlice/getProfil')
     }
   }
@@ -38,7 +43,7 @@
       </nav>
       <nav v-else>
         <RouterLink to="/">Beranda</RouterLink>
-        <RouterLink to="#">Artikel</RouterLink>
+        <RouterLink to="/artikel">Artikel</RouterLink>
         <RouterLink to="#">Profil</RouterLink>
       </nav>
     </div>
