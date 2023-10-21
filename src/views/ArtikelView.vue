@@ -16,10 +16,10 @@ export default{
 
 <template>
     <div>
-        <select class="form-control" :required="true" @change="artikelSlice.kategori">
-            <option :selected="true" v-bind="artikelSlice.kategori = null">Semua Kategori</option>
-            <option :selected="true" v-bind="artikelSlice.kategori = 1">Pemilu</option>
-            <option :selected="true" v-bind="artikelSlice.kategori = 2">Keuangan</option>
+        <select class="form-control" :required="true" v-model="artikelSlice.kategori">
+            <option :selected="true" :value="null">Semua Kategori</option>
+            <option :selected="true" :value="1">Pemilu</option>
+            <option :selected="true" :value="2">Keuangan</option>
         </select>
         <table v-if="artikelSlice.data != null">
             <tr>
@@ -27,7 +27,7 @@ export default{
                 <th>Judul</th>
                 <th>Detail</th>
             </tr>
-            <tr v-for="(item, index) in artikelSlice.data" :key="item.news_id">
+            <tr v-for="(item, index) in artikelSlice.data.filter((data) => data.kategori_id == artikelSlice.kategori)" :key="item.news_id">
                 <td>{{ index + 1 }}</td>
                 <td>{{ item.news_title }}</td>
                 <td>{{ item.news_description }}</td>
