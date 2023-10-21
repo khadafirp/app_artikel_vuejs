@@ -26,11 +26,16 @@ export default{
                 <th>No</th>
                 <th>Judul</th>
                 <th>Detail</th>
+                <th>Aksi</th>
             </tr>
-            <tr v-for="(item, index) in artikelSlice.data.filter((data) => data.kategori_id == artikelSlice.kategori)" :key="item.news_id">
+            <tr v-for="(item, index) in artikelSlice.kategori == null ? artikelSlice.data : artikelSlice.data.filter((data) => data.kategori_id == artikelSlice.kategori)" :key="item.news_id">
                 <td>{{ index + 1 }}</td>
                 <td>{{ item.news_title }}</td>
-                <td>{{ item.news_description }}</td>
+                <td><div class="desc">{{ item.news_description }}</div></td>
+                <td>
+                    <button class="button button2">Ubah</button>
+                    <button class="button button3">Hapus</button>
+                </td>
             </tr>
         </table>
         <div v-else>
@@ -54,7 +59,54 @@ export default{
     padding: 8px;
     text-align: center;
     border-bottom: 1px solid #ddd;
+    white-space: nowrap;
     }
 
     tr:hover {background-color: hsla(160, 100%, 37%, 1);}
+
+    .desc {
+        width : 50%;
+        overflow:hidden;
+        display:inline-block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 16px;
+    }
+
+    .button2 {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #008CBA;
+    }
+
+    .button2:hover {
+    background-color: #008CBA;
+    color: white;
+    }
+
+    .button3 {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #f44336;
+    }
+
+    .button3:hover {
+    background-color: #f44336;
+    color: white;
+    }
+
 </style>
