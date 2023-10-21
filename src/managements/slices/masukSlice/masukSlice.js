@@ -20,6 +20,7 @@ export default {
                 }
             ).then((response) => {
                 if(response.data['status-code'] === 200){
+                    localStorage.setItem('isLogin', true)
                     localStorage.setItem('email', response.data['data']['email'])
                     localStorage.setItem('password', response.data['data']['password'])
                     Swal.fire({
@@ -42,6 +43,13 @@ export default {
                         confirmButtonText: 'Tutup',
                     })
                 }
+            }).catch(function (error) {
+                Swal.fire({
+                    title: 'Login Gagal !',
+                    text: error.data,
+                    icon: 'failed',
+                    confirmButtonText: 'Tutup',
+                })
             })
         }
     },
