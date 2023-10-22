@@ -38,7 +38,7 @@
     </div>
     <div>
       Sudah punya akun ? 
-      <a style="color: hsla(160, 100%, 37%, 1);">Masuk</a>
+      <a style="color: hsla(160, 100%, 37%, 1);" @click="$router.back()">Masuk</a>
     </div>
   </div>
 </template>
