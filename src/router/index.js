@@ -4,6 +4,7 @@ import DaftarView from '../views/DaftarView.vue'
 import ArtikelView from '../views/ArtikelView.vue'
 import EditArtikelView from '../views/EditArtikelView.vue'
 import TambahArtikelView from '../views/TambahArtikelView.vue'
+import LihatArtikelView from '../views/LihatArtikelView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,11 @@ const router = createRouter({
       path: '/tambah-artikel',
       name: 'tambah-artikel',
       component: TambahArtikelView
+    },
+    {
+      path: '/lihat-artikel',
+      name: 'lihat-artikel',
+      component: LihatArtikelView
     }
   ]
 })

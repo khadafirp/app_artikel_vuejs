@@ -10,10 +10,10 @@ export default{
     },
     methods: {
         ...mapActions(['artikelSlice']),
-        editPage(id){
+        editPage(id, page){
             this.artikelSlice.news_id = id
             this.$router.push({
-                path: 'edit-artikel',
+                path: page == 'lihat' ? 'lihat-artikel' : 'edit-artikel',
             })
         },
         hapus(id){
@@ -59,7 +59,8 @@ export default{
                 <td>{{ item.news_title }}</td>
                 <td><div class="desc">{{ item.news_description }}</div></td>
                 <td>
-                    <button class="button button2" @click="editPage(item.news_id)">Ubah</button>
+                    <button class="button button1" @click="editPage(item.news_id, 'lihat')">Lihat</button>
+                    <button class="button button2" @click="editPage(item.news_id, 'ubah')">Ubah</button>
                     <button class="button button3" @click="hapus(item.news_id)">Hapus</button>
                 </td>
             </tr>
@@ -111,6 +112,17 @@ export default{
     transition-duration: 0.4s;
     cursor: pointer;
     border-radius: 16px;
+    }
+
+    .button1 {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #4CAF50;
+    }
+
+    .button1:hover {
+    background-color: #4CAF50;
+    color: white;
     }
 
     .button2 {
