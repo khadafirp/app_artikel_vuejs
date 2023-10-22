@@ -11,6 +11,7 @@ export default {
         judul: null,
         detail: null,
         kategori: null,
+        kategori_id: null,
         endpoint: 'http://localhost:8080/'
     },
     mutations: {
@@ -37,7 +38,7 @@ export default {
                     Swal.fire({
                         title: 'Gagal !',
                         text: response.data.message,
-                        icon: 'failed',
+                        icon: 'error',
                         confirmButtonText: 'OK',
                     })
                 }
@@ -67,6 +68,7 @@ export default {
                     state.judul = response.data.data.news_title
                     state.detail = response.data.data.news_description
                     state.dataEdit = response.data.data
+                    state.kategori_id = response.data.data.kategori_id
                 }
             })
         },
@@ -75,7 +77,7 @@ export default {
                 Swal.fire({
                     title: 'Gagal !',
                     text: 'Data harus diisi.',
-                    icon: 'failed',
+                    icon: 'error',
                     confirmButtonText: 'OK'
                 })
             } else {
@@ -97,6 +99,10 @@ export default {
                     }
                 ).then((response) => {
                     if(response.data['status-code'] == 200){
+                        state.news_id = null
+                        state.kategori_id = null
+                        state.judul = null
+                        state.detail = null
                         Swal.fire({
                             title: 'Berhasil !',
                             text: 'Data berhasil diubah.',
@@ -108,12 +114,93 @@ export default {
                         Swal.fire({
                             title: 'Gagal !',
                             text: 'Data gagal diubah.',
-                            icon: 'failed',
+                            icon: 'error',
                             confirmButtonText: 'OK',
                         })
                     }
                 })
             }
+        },
+        tambahData(state){
+            if(state.kategori_id == null && state.judul == null && state.detail == null){
+                Swal.fire({
+                    title: 'Gagal !',
+                    text: 'Data harus diisi.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+            } else {
+                Swal.showLoading()
+                Axios.post(
+                    state.endpoint + 'tambah-berita',
+                    {
+                        kategori_id: state.kategori_id,
+                        news_title: state.judul, 
+                        news_description: state.detail,
+                        created_at: Date('Y-m-d H:i:s'),
+                        edited_at: Date('Y-m-d H:i:s')
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`
+                        }
+                    }
+                ).then((response) => {
+                    console.log('data = ' + response)
+                    if(response.data['status-code'] === 200){
+                        state.kategori_id = null
+                        state.judul = null
+                        state.detail = null
+                        Swal.fire({
+                            title: 'Berhasil !',
+                            text: 'Data berhasil diubah.',
+                            icon: 'success',
+                            confirmButtonText: 'OK',
+                            timer: 2000
+                        })
+                    } else {
+                        Swal.fire({
+                            title: 'Gagal !',
+                            text: 'Data gagal diubah.',
+                            icon: 'error',
+                            confirmButtonText: 'OK',
+                        })
+                    }
+                })
+            }
+        },
+        hapusData(state){
+            Swal.showLoading()
+            Axios.post(
+                state.endpoint + 'hapus-berita',
+                {
+                    news_id: state.news_id,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            ).then((response) => {
+                if(response.data['status-code'] == 200){
+                    state.news_id = null
+                    Swal.fire({
+                        title: 'Berhasil !',
+                        text: 'Data telah dihapus.',
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                        timer: 2000
+                    })
+                    window.location.reload()
+                } else {
+                    Swal.fire({
+                        title: 'Gagal !',
+                        text: 'Data gagal dihapus.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    })
+                }
+            })
         }
     },
     actions: {
@@ -125,6 +212,12 @@ export default {
         },
         ubah({commit}){
             commit('ubahData')
+        },
+        tambah({commit}){
+            commit('tambahData')
+        },
+        hapus({commit}){
+            commit('hapusData')
         }
     }
 }

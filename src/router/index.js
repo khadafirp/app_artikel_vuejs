@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import DaftarView from '../views/DaftarView.vue'
 import ArtikelView from '../views/ArtikelView.vue'
 import EditArtikelView from '../views/EditArtikelView.vue'
+import TambahArtikelView from '../views/TambahArtikelView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +35,11 @@ const router = createRouter({
       path: '/edit-artikel',
       name: 'edit-artikel',
       component: EditArtikelView
+    },
+    {
+      path: '/tambah-artikel',
+      name: 'tambah-artikel',
+      component: TambahArtikelView
     }
   ]
 })

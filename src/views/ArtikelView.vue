@@ -1,5 +1,8 @@
 <script>
 import { mapState, mapActions } from 'vuex'
+import Swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss'
+
 export default{
     name: 'ArtikelView',
     computed: {
@@ -11,6 +14,20 @@ export default{
             this.artikelSlice.news_id = id
             this.$router.push({
                 path: 'edit-artikel',
+            })
+        },
+        hapus(id){
+            this.artikelSlice.news_id = id
+            Swal.fire({
+                title: 'Hapus Data ?',
+                text: 'Jika anda yakin, maka tekan hapus.',
+                icon: 'question',
+                cancelButtonText: 'Batal',
+                showCancelButton: true,
+                cancelButtonColor: 'green',
+                confirmButtonText: 'Hapus',
+                confirmButtonColor: 'red',
+                preConfirm: () => this.$store.dispatch('artikelSlice/hapus'),
             })
         }
     },
@@ -28,7 +45,7 @@ export default{
                 <option :selected="true" :value="1">Pemilu</option>
                 <option :selected="true" :value="2">Keuangan</option>
             </select>
-            <button style="margin-left: 32px;">Tambah Artikel</button>
+            <button style="margin-left: 32px;" @click="$router.push('/tambah-artikel')">Tambah Artikel</button>
         </div>
         <table v-if="artikelSlice.data != null">
             <tr>
@@ -43,7 +60,7 @@ export default{
                 <td><div class="desc">{{ item.news_description }}</div></td>
                 <td>
                     <button class="button button2" @click="editPage(item.news_id)">Ubah</button>
-                    <button class="button button3">Hapus</button>
+                    <button class="button button3" @click="hapus(item.news_id)">Hapus</button>
                 </td>
             </tr>
         </table>

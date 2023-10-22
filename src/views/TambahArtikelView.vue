@@ -6,17 +6,8 @@ export default{
         ...mapState(['artikelSlice'])
     },
     methods: {
-        ...mapActions(['artikelSlice']),
-        batal(){
-            this.artikelSlice.kategori_id = null
-            this.artikelSlice.judul = null
-            this.artikelSlice.detail = null
-            this.$router.back()
-        }
+        ...mapActions(['artikelSlice'])
     },
-    mounted(){
-        this.$store.dispatch('artikelSlice/filter')
-    }
 }
 </script>
 <template>
@@ -44,8 +35,8 @@ export default{
             <textarea v-model="artikelSlice.detail"></textarea>
         </div>
         <div>
-            <button @click="$store.dispatch('artikelSlice/ubah')">Ubah</button>
-            <button @click="batal">Batal</button>
+            <button @click="$store.dispatch('artikelSlice/tambah')">Ubah</button>
+            <button @click="$router.back()">Batal</button>
         </div>
     </div>
 </template>

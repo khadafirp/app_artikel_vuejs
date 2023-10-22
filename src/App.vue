@@ -10,8 +10,9 @@
     methods: {
       ...mapActions(['profilSlice']),
       keluar(){
-        this.$router.push('/')
+        this.profilSlice.nama_lengkap = null
         localStorage.clear()
+        this.$router.replace('/')
         window.location.reload()
       }
     },
