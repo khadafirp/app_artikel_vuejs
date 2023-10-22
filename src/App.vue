@@ -1,9 +1,6 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   export default {
-    state: {
-      reload: true
-    },
     computed: {
       ...mapState(['profilSlice'])
     },
@@ -13,12 +10,12 @@
         this.profilSlice.nama_lengkap = null
         localStorage.clear()
         this.$router.replace('/')
-        window.location.reload()
       }
     },
     mounted(){
-      // window.location.reload()
-      this.$store.dispatch('profilSlice/getProfil')
+      if(localStorage.getItem('email') != null){
+        this.$store.dispatch('profilSlice/getProfil')
+      }
     }
   }
 </script>
@@ -38,7 +35,7 @@
         </div>
       </div>
 
-      <nav v-if="profilSlice.nama_lengkap === null">
+      <nav v-if="profilSlice.nama_lengkap == null">
         <RouterLink to="/">Beranda</RouterLink>
         <RouterLink to="/masuk">Masuk</RouterLink>
       </nav>

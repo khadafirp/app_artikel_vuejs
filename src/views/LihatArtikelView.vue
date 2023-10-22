@@ -9,7 +9,9 @@ export default{
         ...mapActions(['artikelSlice']),
     },
     mounted(){
-        this.$store.dispatch('artikelSlice/filter')
+        if(localStorage.getItem('email') != null){
+            this.$store.dispatch('artikelSlice/filter')
+        }
     }
 }
 </script>

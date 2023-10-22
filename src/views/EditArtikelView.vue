@@ -15,7 +15,9 @@ export default{
         }
     },
     mounted(){
-        this.$store.dispatch('artikelSlice/filter')
+        if(localStorage.getItem('email') != null){
+            this.$store.dispatch('artikelSlice/filter')
+        }
     }
 }
 </script>

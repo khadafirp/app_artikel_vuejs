@@ -5,6 +5,11 @@ import 'sweetalert2/src/sweetalert2.scss'
 
 export default{
     name: 'ArtikelView',
+    data(){
+        return {
+            reload: true
+        }
+    },
     computed: {
         ...mapState(['artikelSlice'])
     },
@@ -12,9 +17,7 @@ export default{
         ...mapActions(['artikelSlice']),
         editPage(id, page){
             this.artikelSlice.news_id = id
-            this.$router.push({
-                path: page == 'lihat' ? 'lihat-artikel' : 'edit-artikel',
-            })
+            this.$router.push(page == 'lihat' ? 'lihat-artikel' : 'edit-artikel')
         },
         hapus(id){
             this.artikelSlice.news_id = id
@@ -32,7 +35,10 @@ export default{
         }
     },
     mounted(){
-        this.$store.dispatch('artikelSlice/getArtikel')
+        if(localStorage.getItem('email') != null){
+            this.$store.dispatch('artikelSlice/getArtikel')
+            this.reload = false
+        }
     }
 }
 </script>
