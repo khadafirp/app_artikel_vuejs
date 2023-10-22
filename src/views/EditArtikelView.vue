@@ -28,8 +28,8 @@ export default{
             <textarea v-model="artikelSlice.detail"></textarea>
         </div>
         <div>
-            <button>Ubah</button>
-            <button>Batal</button>
+            <button @click="$store.dispatch('artikelSlice/ubah')">Ubah</button>
+            <button @click="$router.back()">Batal</button>
         </div>
     </div>
 </template>

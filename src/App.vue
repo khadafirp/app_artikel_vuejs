@@ -10,8 +10,8 @@
     methods: {
       ...mapActions(['profilSlice']),
       keluar(){
-        localStorage.clear()
         this.$router.push('/')
+        localStorage.clear()
         window.location.reload()
       }
     },

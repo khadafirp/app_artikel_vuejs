@@ -9,7 +9,6 @@ export default {
     },
     mutations: {
         getProfil(state){
-            if(localStorage.getItem('isLogin') == true){
             Axios.post(
                 state.endpoint + 'profil-pengguna',
                 {
@@ -22,7 +21,6 @@ export default {
                     localStorage.setItem('token', response.data['token'])
                 }
             })
-        }
         }
     },
     actions: {

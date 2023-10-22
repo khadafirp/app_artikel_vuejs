@@ -22,11 +22,14 @@ export default{
 
 <template>
     <div>
-        <select class="form-control" :required="true" v-model="artikelSlice.kategori">
-            <option :selected="true" :value="null">Semua Kategori</option>
-            <option :selected="true" :value="1">Pemilu</option>
-            <option :selected="true" :value="2">Keuangan</option>
-        </select>
+        <div>
+            <select class="form-control" :required="true" v-model="artikelSlice.kategori">
+                <option :selected="true" :value="null">Semua Kategori</option>
+                <option :selected="true" :value="1">Pemilu</option>
+                <option :selected="true" :value="2">Keuangan</option>
+            </select>
+            <button style="margin-left: 32px;">Tambah Artikel</button>
+        </div>
         <table v-if="artikelSlice.data != null">
             <tr>
                 <th>No</th>

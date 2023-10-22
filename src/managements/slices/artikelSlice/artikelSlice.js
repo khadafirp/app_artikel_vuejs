@@ -24,7 +24,13 @@ export default {
                     },
                 }
             ).then((response) => {
-                Swal.hideLoading()
+                Swal.fire({
+                    title: 'Berhasil !',
+                    text: 'Data berhasil dimuat.',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 2000
+                })
                 if(response.data['status-code'] == 200){
                     state.data = response.data.data
                 } else {
@@ -50,13 +56,64 @@ export default {
                     }
                 }
             ).then((response) => {
-                Swal.hideLoading()
+                Swal.fire({
+                    title: 'Berhasil !',
+                    text: 'Data telah dimuat.',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 2000
+                })
                 if(response.data['status-code'] === 200){
                     state.judul = response.data.data.news_title
                     state.detail = response.data.data.news_description
                     state.dataEdit = response.data.data
                 }
             })
+        },
+        ubahData(state){
+            if(state.judul == null && state.detail == null){
+                Swal.fire({
+                    title: 'Gagal !',
+                    text: 'Data harus diisi.',
+                    icon: 'failed',
+                    confirmButtonText: 'OK'
+                })
+            } else {
+                Swal.showLoading()
+                Axios.post(
+                    state.endpoint + 'edit-berita',
+                    {
+                        news_id: state.news_id,
+                        kategori_id: state.dataEdit.kategori_id,
+                        news_title: state.judul, 
+                        news_description: state.detail,
+                        created_at: state.dataEdit.created_at,
+                        edited_at: Date('Y-m-d H:i:s')
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`
+                        }
+                    }
+                ).then((response) => {
+                    if(response.data['status-code'] == 200){
+                        Swal.fire({
+                            title: 'Berhasil !',
+                            text: 'Data berhasil diubah.',
+                            icon: 'success',
+                            confirmButtonText: 'OK',
+                            timer: 2000
+                        })
+                    } else {
+                        Swal.fire({
+                            title: 'Gagal !',
+                            text: 'Data gagal diubah.',
+                            icon: 'failed',
+                            confirmButtonText: 'OK',
+                        })
+                    }
+                })
+            }
         }
     },
     actions: {
@@ -65,6 +122,9 @@ export default {
         },
         filter({commit}){
             commit('filterData')
+        },
+        ubah({commit}){
+            commit('ubahData')
         }
     }
 }

@@ -43,13 +43,6 @@ export default {
                         confirmButtonText: 'Tutup',
                     })
                 }
-            }).catch(function (error) {
-                Swal.fire({
-                    title: 'Login Gagal !',
-                    text: error.data,
-                    icon: 'failed',
-                    confirmButtonText: 'Tutup',
-                })
             })
         }
     },
